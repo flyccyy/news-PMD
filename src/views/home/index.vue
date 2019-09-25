@@ -50,13 +50,13 @@ export default {
         channel.uploading = false;
         channel.downloading = false;
       } else {
-          //第二次进入：就是触底的时候
+        //第二次进入：就是触底的时候
         let res = await getArticles({
           channel_id: channel.id,
           timestamp: channel.pre_timestamp,
           with_top: 1
         });
-        channel.article = [...channel.article,...res.data.data.results];
+        channel.article = [...channel.article, ...res.data.data.results];
         channel.pre_timestamp = res.data.data.pre_timestamp;
         this.channelList = [...this.channelList];
         channel.uploading = false;
@@ -84,11 +84,11 @@ export default {
     //获取完频道数据后给里面的数据添加属性
     setChannelItem() {
       this.channelList.forEach(item => {
-        item.article = [];
-        item.uploading = false;
-        item.downloading = false;
-        item.finished = false;
-        item.pre_timestamp = 0;
+        this.$set(item, "pre_timestamp", 0);
+        this.$set(item, "uploading", false);
+        this.$set(item, "downloading", false);
+        this.$set(item, "finished", false);
+        this.$set(item, "article", []);
       });
     }
   },
