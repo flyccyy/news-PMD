@@ -15,22 +15,33 @@
         </van-pull-refresh>
       </van-tab>
       <div slot="nav-right" class="navIcon">
-        <van-icon name="wap-nav" />
+        <van-icon name="wap-nav" @click="showChannel" />
       </div>
     </van-tabs>
+    <channel
+      v-model="channelShow"
+      :channelList="channelList"
+      :active="active"
+      @changeActive="active=$event"
+    ></channel>
   </div>
 </template>
 
 <script>
 import { getChannels } from "@/api/channel.js";
 import { getArticles } from "@/api/article.js";
+import channel from "@/views/home/channel";
 export default {
   name: "home",
+  components: {
+    channel
+  },
   data() {
     return {
       active: 0,
       channelList: [],
-      article: []
+      article: [],
+      channelShow: false
     };
   },
   methods: {
@@ -90,13 +101,29 @@ export default {
         this.$set(item, "finished", false);
         this.$set(item, "article", []);
       });
+    },
+    showChannel() {
+      this.channelShow = true;
+    },
+    async getChannels() {
+      if (this.$store.state.user) {
+        let res = await getChannels();
+        this.channelList = res.data.data.channels;
+      } else {
+        let localChannel = window.localStorage.getItem("channel");
+        if (localChannel) {
+          this.channelList = JSON.parse(localChannel);
+        } else {
+          let res = await getChannels();
+          this.channelList = res.data.data.channels;
+          console.log(this.channelList);
+        }
+      }
+      this.setChannelItem();
     }
   },
   mounted() {
-    getChannels().then(res => {
-      this.channelList = res.data.data.channels;
-      this.setChannelItem();
-    });
+    this.getChannels();
   }
 };
 </script>
