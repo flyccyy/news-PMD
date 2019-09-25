@@ -10,7 +10,25 @@
             finished-text="没有更多了"
             @load="onLoad"
           >
-            <van-cell v-for="(subitem,index) in item.article" :key="index" :title="subitem.title" />
+            <van-cell v-for="(subitem,index) in item.article" :key="index" :title="subitem.title">
+              <template slot="label">
+                <van-grid v-if="subitem.cover.type>0" :border="false" :column-num="3">
+                  <van-grid-item v-for="(img,imgIndex) in subitem.cover.images" :key="imgIndex">
+                    <van-image :src="img" lazy-load></van-image>
+                  </van-grid-item>
+                </van-grid>
+                <div class="message">
+                  <div class="left">
+                    <span>{{subitem.aut_name}}</span>
+                    <span>评论 {{subitem.comm_count}}</span>
+                    <span class="date">{{subitem.pubdate | dateFormat}}</span>
+                  </div>
+                  <div class="right">
+                    <van-icon name="close" @click="showDialog(subitem)" />
+                  </div>
+                </div>
+              </template>
+            </van-cell>
           </van-list>
         </van-pull-refresh>
       </van-tab>
@@ -24,6 +42,7 @@
       :active="active"
       @changeActive="active=$event"
     ></channel>
+    <more v-model="dialogShow" :art_id="art_id" :aut_id="aut_id" @hideMsg="hideMsg"></more>
   </div>
 </template>
 
@@ -31,17 +50,22 @@
 import { getChannels } from "@/api/channel.js";
 import { getArticles } from "@/api/article.js";
 import channel from "@/views/home/channel";
+import more from "@/views/home/more";
 export default {
   name: "home",
   components: {
-    channel
+    channel,
+    more
   },
   data() {
     return {
       active: 0,
       channelList: [],
       article: [],
-      channelShow: false
+      channelShow: false,
+      dialogShow: false,
+      art_id: 0,
+      aut_id: 0
     };
   },
   methods: {
@@ -120,6 +144,20 @@ export default {
         }
       }
       this.setChannelItem();
+    },
+    showDialog(item) {
+      this.dialogShow = true;
+      this.art_id = item.art_id;
+      this.aut_id = item.aut_id;
+    },
+    hideMsg(id) {
+      let article = this.channelList[this.active].article;
+      article.forEach((item, index) => {
+        if (item.id === id) {
+          article.splice(index, 1);
+          return;
+        }
+      });
     }
   },
   mounted() {
@@ -154,5 +192,12 @@ export default {
   left: 0;
   width: 90%;
   z-index: 999;
+}
+.message {
+  display: flex;
+  justify-content: space-between;
+  .date {
+    margin-left: 10px;
+  }
 }
 </style>

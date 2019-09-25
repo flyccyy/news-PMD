@@ -11,4 +11,39 @@ function getArticles({ channel_id, timestamp, with_top }) {
     }
   });
 }
-export { getArticles };
+
+//对文章不喜欢（隐藏信息）
+function dislikeArticle(target) {
+  return request({
+    url: "v1_0/article/dislikes",
+    method: "POST",
+    data: {
+      target
+    }
+  });
+}
+
+//拉黑用户
+function userBlacklist(target){
+  return request({
+    url:'v1_0/user/blacklists',
+    method:'POST',
+    data:{
+      target
+    }
+  })
+}
+
+//举报文章
+function reportArticle({target,type}){
+  return request({
+    url:'v1_0/article/reports',
+    method:'POST',
+    data:{
+      target,
+      type,
+      remark:'举报'
+    }
+  })
+}
+export { getArticles, dislikeArticle,userBlacklist,reportArticle };
