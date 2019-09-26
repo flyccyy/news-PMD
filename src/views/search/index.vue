@@ -8,16 +8,9 @@
       @cancel="onCancel"
     />
     <van-cell-group>
-      <van-cell
-     
-        icon="search"
-        v-for="(item,index) in suggestList"
-        :key="index"
-        @click="onSearch"
-      >
+      <van-cell icon="search" v-for="(item,index) in suggestList" :key="index" @click="onSearch">
         <template slot="title">
-            <div v-html="item">    
-            </div>
+          <div v-html="item"></div>
         </template>
       </van-cell>
     </van-cell-group>
@@ -25,16 +18,16 @@
       <van-cell title="搜索历史">
         <template slot="default">
           <div>
-            <span v-if="delShow" @click="delAll">全部删除 </span>
+            <span v-if="delShow" @click="delAll">全部删除</span>
             <span v-if="delShow" @click="finished">完成</span>
-            <van-icon name="delete" @click="delSearch" v-if="!delShow"/>
+            <van-icon name="delete" @click="delSearch" v-if="!delShow" />
           </div>
         </template>
       </van-cell>
       <van-cell icon="search" :title="item" v-for="(item,index) in searchHistory" :key="index">
         <template slot="default">
           <div>
-            <van-icon name="close" v-if="delShow" @click="delOneItem(index)"/>
+            <van-icon name="close" v-if="delShow" @click="delOneItem(index)" />
           </div>
         </template>
       </van-cell>
@@ -51,6 +44,7 @@ export default {
       suggestList: [],
       searchHistory: JSON.parse(window.localStorage.getItem("search")) || [],
       delShow:false,
+      timer:null,
     };
   },
   methods: {
@@ -83,17 +77,24 @@ export default {
     }
   },
   watch: {
-    async key(newVal,oldVal) {
-      if (this.key.trim() == "") {
-        this.suggestList = [];
-      } else {
-        let res = await suggestion(this.key);
-        this.suggestList = res.data.data.options;
-        this.suggestList = this.suggestList.map((item,index)=>{
-           return  item.split(newVal).join('<span style="color:#f00">'+newVal+'</span>')
-        })
-        console.log(res);
-      }
+      
+     key(newVal,oldVal) {
+        if(this.timer){
+            clearTimeout(this.timer)
+        }
+        this.timer = setTimeout(async ()=>{
+            if (newVal.trim() == "") {
+              this.suggestList = [];
+              return;
+            } else {
+              let res = await suggestion(newVal);
+              this.suggestList = res.data.data.options;
+              this.suggestList = this.suggestList.map((item,index)=>{
+                 return  item.split(newVal).join('<span style="color:#f00">'+newVal+'</span>')
+              })
+              console.log(res);
+            }
+        },500)
     }
   }
 };
