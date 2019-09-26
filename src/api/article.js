@@ -46,4 +46,15 @@ function reportArticle({target,type}){
     }
   })
 }
-export { getArticles, dislikeArticle,userBlacklist,reportArticle };
+
+//获取联想建议
+function suggestion(key){
+  return request({
+    url:'v1_0/suggestion',
+    method:'GET',
+    params:{
+      q:key
+    }
+  })
+}
+export { getArticles, dislikeArticle,userBlacklist,reportArticle,suggestion };

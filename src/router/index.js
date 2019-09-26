@@ -26,6 +26,16 @@ export default new Router({
       name: "login",
       path: "/login",
       component: () => import("@/views/login")
+    },
+    {
+      name:'search',
+      path:'/search',
+      component:()=>import('@/views/search')
+    },
+    {
+      name:'list',
+      path:'/list/:key',
+      component:()=>import('@/views/list')
     }
   ]
 });

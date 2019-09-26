@@ -32,14 +32,6 @@
           :key="index"
           @click="report(item)"
         ></van-cell>
-        <!-- <van-cell title="标题夸张" icon="location-o"></van-cell>
-        <van-cell title="低俗色情" icon="location-o"></van-cell>
-        <van-cell title="错别字多" icon="location-o"></van-cell>
-        <van-cell title="旧闻重复" icon="location-o"></van-cell>
-        <van-cell title="广告软文" icon="location-o"></van-cell>
-        <van-cell title="内容不实" icon="location-o"></van-cell>
-        <van-cell title="涉嫌违法犯罪" icon="location-o"></van-cell>
-        <van-cell title="侵权" icon="location-o"></van-cell>-->
       </van-cell-group>
     </van-dialog>
   </div>
