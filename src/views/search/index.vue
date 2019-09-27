@@ -8,7 +8,7 @@
       @cancel="onCancel"
     />
     <van-cell-group>
-      <van-cell icon="search" v-for="(item,index) in suggestList" :key="index" @click="onSearch">
+      <van-cell icon="search" v-for="(item,index) in suggestList" :key="index" @click="onSearch(key)">
         <template slot="title">
           <div v-html="item"></div>
         </template>
@@ -24,7 +24,7 @@
           </div>
         </template>
       </van-cell>
-      <van-cell icon="search" :title="item" v-for="(item,index) in searchHistory" :key="index">
+      <van-cell icon="search" :title="item" v-for="(item,index) in searchHistory" :key="index" @click="onSearch(item)">
         <template slot="default">
           <div>
             <van-icon name="close" v-if="delShow" @click="delOneItem(index)" />
@@ -49,11 +49,11 @@ export default {
   },
   methods: {
     //点击完成时触发
-    onSearch() {
-      this.searchHistory.unshift(this.key);
+    onSearch(key) {
+      this.searchHistory.unshift(key);
       this.searchHistory = [...new Set(this.searchHistory)];
       window.localStorage.setItem("search", JSON.stringify(this.searchHistory));
-      this.$router.push("/list/" + this.key);
+      this.$router.push("/list/" + key);
     },
     onCancel() {
       this.suggestList = [];
