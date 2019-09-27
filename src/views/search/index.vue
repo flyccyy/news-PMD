@@ -77,7 +77,6 @@ export default {
     }
   },
   watch: {
-      
      key(newVal,oldVal) {
         if(this.timer){
             clearTimeout(this.timer)
@@ -92,7 +91,6 @@ export default {
               this.suggestList = this.suggestList.map((item,index)=>{
                  return  item.split(newVal).join('<span style="color:#f00">'+newVal+'</span>')
               })
-              console.log(res);
             }
         },500)
     }

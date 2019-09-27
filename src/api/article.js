@@ -57,4 +57,17 @@ function suggestion(key){
     }
   })
 }
-export { getArticles, dislikeArticle,userBlacklist,reportArticle,suggestion };
+
+//获取搜索结果（list组件）
+function getList({page,per_page,q}){
+  return request({
+    url:'v1_0/search',
+    method:'GET',
+    params:{
+      page,
+      per_page,
+      q
+    }
+  })
+}
+export { getArticles, dislikeArticle,userBlacklist,reportArticle,suggestion,getList };
