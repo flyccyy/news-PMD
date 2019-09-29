@@ -36,6 +36,11 @@ export default new Router({
       name:'list',
       path:'/list/:key',
       component:()=>import('@/views/list')
+    },
+    {
+      name:'detail',
+      path:'/detail/:art_id',
+      component:()=>import('@/views/detail')
     }
   ]
 });

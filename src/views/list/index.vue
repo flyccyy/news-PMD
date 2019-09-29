@@ -8,7 +8,7 @@
     <van-cell-group>
       <van-cell :title="item.aut_name" v-for="(item,index) in searchList" :key="index">
         <template slot="label">
-          <span>{{item.title}}</span>
+          <span @click="toDetail(item)">{{item.title}}</span>
           <van-grid :column-num="3">
             <van-grid-item  text="评论" />
             <van-grid-item  text="点赞" />
@@ -26,6 +26,11 @@ export default {
   data(){
     return{
       searchList:[]
+    }
+  },
+  methods: {
+    toDetail(item){
+      this.$router.push('/detail/'+item.art_id)
     }
   },
   async mounted(){

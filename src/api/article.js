@@ -70,4 +70,13 @@ function getList({page,per_page,q}){
     }
   })
 }
-export { getArticles, dislikeArticle,userBlacklist,reportArticle,suggestion,getList };
+
+//获取新闻文章详情
+function getArticleDetail(art_id){
+  return request({
+    url:`v1_0/articles/${art_id}`,
+    method:'GET'
+  })
+}
+
+export { getArticles, dislikeArticle,userBlacklist,reportArticle,suggestion,getList,getArticleDetail };
