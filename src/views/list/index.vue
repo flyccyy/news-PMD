@@ -5,42 +5,51 @@
         <van-icon name="arrow-left" />
       </template>
     </van-nav-bar>
-    <van-cell-group>
-      <van-cell :title="item.aut_name" v-for="(item,index) in searchList" :key="index">
-        <template slot="label">
-          <span @click="toDetail(item)">{{item.title}}</span>
-          <van-grid :column-num="3">
-            <van-grid-item  text="评论" />
-            <van-grid-item  text="点赞" />
-            <van-grid-item  text="收藏" />
-          </van-grid>
-        </template>
-      </van-cell>
-    </van-cell-group>
+    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+      <van-cell-group>
+        <van-cell :title="item.aut_name" v-for="(item,index) in searchList" :key="index">
+          <template slot="label">
+            <span @click="toDetail(item)">{{item.title}}</span>
+            <van-grid :column-num="3">
+              <van-grid-item text="评论" />
+              <van-grid-item text="点赞" />
+              <van-grid-item text="收藏" />
+            </van-grid>
+          </template>
+        </van-cell>
+      </van-cell-group>
+    </van-list>
   </div>
 </template>
 
 <script>
-import {getList} from '@/api/article.js'
+import { getList } from "@/api/article.js";
 export default {
-  data(){
-    return{
-      searchList:[]
-    }
+  data() {
+    return {
+      loading: false,
+      finished: false,
+      searchList: [],
+      page:0
+    };
   },
   methods: {
-    toDetail(item){
-      this.$router.push('/detail/'+item.art_id)
+    async onLoad() {
+      this.page++;
+      let res = await getList({
+        page: this.page,
+        per_page: 10,
+        q: this.$route.params.key
+      });
+      this.searchList = [...this.searchList,...res.data.data.results];
+      if(this.searchList.length===res.data.data.total_count){
+        this.finished = true;
+      }
+      this.loading = false;
+    },
+    toDetail(item) {
+      this.$router.push("/detail/" + item.art_id);
     }
-  },
-  async mounted(){
-    let res = await getList({
-      page:1,
-      per_page:10,
-      q:this.$route.params.key
-    })
-    console.log(res)
-    this.searchList = res.data.data.results;
   }
 };
 </script>
@@ -56,10 +65,10 @@ export default {
     color: #fff;
   }
 }
-.list_wrap{
+.list_wrap {
   margin-top: 46px;
-  .van-cell{
-    border-bottom:10px solid #eee
+  .van-cell {
+    border-bottom: 10px solid #eee;
   }
 }
 .van-icon {
