@@ -9,16 +9,20 @@ import relativeTime from "dayjs/plugin/relativeTime";
 //使用vant
 import Vant from "vant";
 import "vant/lib/index.css";
+import VeeValidate, { Validator } from "vee-validate";
+import zh_CN from "vee-validate/dist/locale/zh_CN";
+//导入自己封装的登录方法的插件
+import loginplugin from '@/utils/loginplugin.js'
 Vue.use(Vant);
 //使用VeeValidate
-import VeeValidate, { Validator } from "vee-validate";
 Vue.use(VeeValidate, {
   events: ""
 });
 //Lazyload配合van-image的lazy-load使用
 Vue.use(Lazyload);
+
+Vue.use(loginplugin)
 //导入语言包
-import zh_CN from "vee-validate/dist/locale/zh_CN";
 Validator.localize("zh_CN", zh_CN);
 //dayjs
 dayjs.locale("zh-cn");
@@ -27,6 +31,9 @@ dayjs.extend(relativeTime);
 Vue.filter("dateFormat", value => {
   return dayjs().from(dayjs(value))
 });
+Vue.filter('commentFormat',value=>{
+  return dayjs(value).format('MM-DD HH:mm')
+})
 
 Vue.config.productionTip = false;
 

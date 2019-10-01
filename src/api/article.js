@@ -79,4 +79,31 @@ function getArticleDetail(art_id){
   })
 }
 
-export { getArticles, dislikeArticle,userBlacklist,reportArticle,suggestion,getList,getArticleDetail };
+//对文章点赞
+function likeArticle(art_id){
+  return request({
+    url:'v1_0/article/likings',
+    method:'POST',
+    data:{
+      target:art_id
+    }
+  })
+}
+
+//取消对文章点赞
+function disliking(art_id){
+  return request({
+    url:'v1_0/article/likings/'+art_id,
+    method:'DELETE',
+  })
+}
+
+//取消对文章不喜欢
+function cancelDislikeArticle(art_id) {
+  return request({
+    url: "v1_0/article/dislikes/"+art_id,
+    method: "DELETE",
+
+  });
+}
+export { getArticles, dislikeArticle,userBlacklist,reportArticle,suggestion,getList,getArticleDetail,likeArticle,disliking,cancelDislikeArticle };

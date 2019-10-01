@@ -52,7 +52,7 @@ export default {
           });
           this.loginLoading = false;
           this.$store.commit("setUser", res.data.data);
-          this.$router.push("/home");
+          this.$router.back();
         } catch (error) {
           this.$toast.fail("登录失败");
         }

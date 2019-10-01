@@ -11,7 +11,7 @@
           <template slot="label">
             <span @click="toDetail(item)">{{item.title}}</span>
             <van-grid :column-num="3">
-              <van-grid-item text="评论" />
+              <van-grid-item text="评论" @click="toWriteComment" />
               <van-grid-item text="点赞" />
               <van-grid-item text="收藏" />
             </van-grid>
@@ -30,7 +30,7 @@ export default {
       loading: false,
       finished: false,
       searchList: [],
-      page:0
+      page: 0
     };
   },
   methods: {
@@ -41,14 +41,17 @@ export default {
         per_page: 10,
         q: this.$route.params.key
       });
-      this.searchList = [...this.searchList,...res.data.data.results];
-      if(this.searchList.length===res.data.data.total_count){
+      this.searchList = [...this.searchList, ...res.data.data.results];
+      if (this.searchList.length === res.data.data.total_count) {
         this.finished = true;
       }
       this.loading = false;
     },
     toDetail(item) {
       this.$router.push("/detail/" + item.art_id);
+    },
+    toWriteComment() {
+      this.$login();
     }
   }
 };

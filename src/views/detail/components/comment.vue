@@ -1,33 +1,54 @@
 <template>
   <div class="comment">
-    <van-cell>
-      <template slot="title">
-        <div class="desc">
-          <div class="img">
-            <van-image
-              src="http://toutiao.meiduo.site/Fkj6tQi3xJwVXi1u2swCElotfdCi"
-              width="50"
-              height="50"
-            />
+      <van-cell >
+        <template slot="title">
+          <div class="desc">
+            <div class="img">
+              <van-image :src="item.aut_photo" width="50" height="50" />
+            </div>
+            <div class="account">
+              <van-cell :title="item.aut_name" label></van-cell>
+            </div>
+            <div class="btn">
+              <van-icon name="good-job-o" />
+              {{item.like_count}}
+            </div>
           </div>
-          <div class="account">
-            <van-cell title="11821215" label></van-cell>
+          <div class="content">
+            <div>{{item.content}}</div>
+            <div>
+              {{item.pubdate | commentFormat}}
+              <span @click="replyHandler" v-if="!isShowReply">回复({{item.reply_count}})</span>
+            </div>
           </div>
-          <div class="btn">
-             <van-icon name="good-job-o" /> 0
-          </div>
-        </div>
-        <div class="content">
-          <div>你好</div>
-          <div>09-22 <span>回复(0)</span></div>
-        </div>
-      </template>
-    </van-cell>
+        </template>
+      </van-cell>
   </div>
 </template>
 
 <script>
-export default {};
+import eventbus from '@/utils/eventbus'
+export default {
+  props: ["item",'isShowReply'],
+  data() {
+    return {
+   
+
+    }
+  },
+  methods:{
+    // replyComment(){
+    //   this.$emit('replyComment',true)
+    // }
+    replyHandler(){
+      eventbus.$emit('replyObj',{
+        reply:true,
+        ...this.item
+      })
+      // this.$emit('replyObj',this.item)
+    }
+  }
+};
 </script>
 
 <style lang="less" scoped>
@@ -42,8 +63,8 @@ export default {};
 .comment .img /deep/ .van-image__img {
   border-radius: 50%;
 }
-.content{
-    margin-left: 66px;
-    margin-top: -10px;
+.content {
+  margin-left: 66px;
+  margin-top: -10px;
 }
 </style>

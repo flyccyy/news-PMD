@@ -17,7 +17,8 @@
           </van-cell>
         </div>
         <div>
-          <van-button type="danger" size="small">关注</van-button>
+          <van-button type="danger" size="small" @click="follow(detailMsg.aut_id)" v-if="detailMsg.is_followed===false">关注</van-button>
+          <van-button type="default" size="small" v-else @click="cancelFollow(detailMsg.aut_id)">取消关注</van-button>
         </div>
       </div>
     </van-cell>
@@ -25,8 +26,25 @@
 </template>
 
 <script>
+import {followUser,cancelFollowUser} from '@/api/user.js'
 export default {
-  props:['detailMsg']
+  props:['detailMsg'],
+  data() {
+    return {
+    }
+  },
+  methods: {
+    async follow(aut_id){
+      let res = await followUser(aut_id)
+      this.$toast.success('关注成功')
+      this.detailMsg.is_followed = true;
+    },
+    async cancelFollow(aut_id){
+      let res = await cancelFollowUser(aut_id)
+      this.$toast.success('取关成功')
+      this.detailMsg.is_followed = false
+    }
+  },
 };
 </script>
 

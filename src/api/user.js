@@ -11,4 +11,25 @@ function userLogin({ mobile, code }) {
     }
   });
 }
-export { userLogin };
+
+//关注用户
+function followUser(aut_id){
+  return request({
+    url:'v1_0/user/followings',
+    method:'POST',
+    data:{
+      target:aut_id
+    }
+  })
+}
+
+//取关用户
+function cancelFollowUser(aut_id){
+  return request({
+    url:'v1_0/user/followings/'+aut_id,
+    method:'DELETE',
+    
+  })
+}
+
+export { userLogin,followUser,cancelFollowUser };
