@@ -14,7 +14,6 @@ const refresh_request = axios.create({
 //请求拦截
 myrequest.interceptors.request.use(
   config => {
-    //如果用户已经登录了才设置请求头
     if(store.state.user){
       let usertoken = store.state.user.token;
       config.headers.Authorization = `Bearer ${usertoken}`

@@ -64,7 +64,6 @@ export default {
     },
     async addToMychannel(item) {
       this.channelList.push(item);
-      // this.saveChannel();
       let user = this.$store.state.user;
       if (!user || !user.token) {
         window.localStorage.setItem(
@@ -82,23 +81,23 @@ export default {
         console.log(res);
       }
     },
-    // async saveChannel() {
-    //   if (this.$store.state.user) {
-    //     let channels = this.channelList.slice(1).map((item, index) => {
-    //       return {
-    //         id: item.id,
-    //         seq: index + 2
-    //       };
-    //     });
-    //     let res = await editChannels(channels);
-    //     console.log(res);
-    //   } else {
-    //     window.localStorage.setItem(
-    //       "channel",
-    //       JSON.stringify(this.channelList)
-    //     );
-    //   }
-    // },
+    async saveChannel() {
+      if (this.$store.state.user) {
+        let channels = this.channelList.slice(1).map((item, index) => {
+          return {
+            id: item.id,
+            seq: index + 2
+          };
+        });
+        let res = await editChannels(channels);
+        console.log(res);
+      } else {
+        window.localStorage.setItem(
+          "channel",
+          JSON.stringify(this.channelList)
+        );
+      }
+    },
     finished() {
       this.clearBtnShow = false;
     },

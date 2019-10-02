@@ -31,7 +31,7 @@
     </van-list>
     <write :art_id="art_id" @writeMsg="writeMsg" :isCollect="true"></write>
 
-    <!-- 评论的回复 -->
+    <!-- 评论的回复的弹出层 -->
     <van-popup v-model="reply" position="bottom" :style="{ height: '60%' }">
       <van-cell>
         <h3>当前评论</h3>
@@ -58,8 +58,6 @@
 </template>
 
 <script>
-//author,like都是在首页拿到的数据再传给他们
-//这几个子组件的内容都要通过index传递数据给他们，不能直接在子组件的mounted发请求获取数据，因为数据需要一打开页面就显示，所以只能在index里面获取再传递给他们
 import author from "@/views/detail/components/author";
 import like from "@/views/detail/components/like";
 import comment from "@/views/detail/components/comment";
@@ -68,7 +66,6 @@ import { getArticleDetail } from "@/api/article.js";
 import { getComment } from "@/api/comment.js";
 import eventbus from "@/utils/eventbus.js";
 export default {
-  //评论的回复
   components: {
     author,
     like,
@@ -131,8 +128,6 @@ export default {
     writeMsg(value) {
       this.commentList.unshift({
         ...value.new_obj
-        // art_id:value.art_id,
-        // com_id:value.com_id
       });
     },
     replyList(value) {
@@ -182,7 +177,6 @@ export default {
   },
   mounted() {
     this.getArticleDetail();
-    // this.replyComment();
     eventbus.$on("replyObj", value => {
       this.reply = value.reply;
       this.replyItem = value;

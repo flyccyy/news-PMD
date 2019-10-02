@@ -69,7 +69,6 @@ export default {
     };
   },
   methods: {
-    //一打开页面跟触底会触发这个方法
     async onLoad() {
       let channel = this.channelList[this.active];
       //第一次请求，意思是刚打开页面

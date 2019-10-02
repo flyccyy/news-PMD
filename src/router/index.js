@@ -5,7 +5,6 @@ Vue.use(Router);
 
 export default new Router({
   routes: [
-    //重定向到首页
     {
       path: "/",
       redirect: "/home"

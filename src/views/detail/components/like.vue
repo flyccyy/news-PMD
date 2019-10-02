@@ -47,8 +47,6 @@ export default {
       } catch (error) {
         this.$toast.fail("点赞失败");
       }
-     
-    
     },
     //对文章取消点赞
     async disliking() {

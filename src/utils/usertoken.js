@@ -9,8 +9,4 @@ function getToken() {
 function removeToken() {
   window.localStorage.removeItem(TOKEN_KEY);
 }
-export {
-    setToken,
-    getToken,
-    removeToken
-}
+export { setToken, getToken, removeToken };

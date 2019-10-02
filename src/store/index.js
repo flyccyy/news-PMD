@@ -14,7 +14,5 @@ export default new Vuex.Store({
       state.user = val
     }
   },
-  actions: {
-
-  }
+  
 })

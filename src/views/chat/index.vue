@@ -9,19 +9,12 @@
     </van-nav-bar>
     <div class="main">
       <ul class="talk_list">
-           <li class="rightmsg">
+        <li class="rightmsg">
           <span>{{msg}}</span>
         </li>
         <li class="leftmsg">
           <span>你好</span>
         </li>
-       
-        <!-- <li class="leftmsg">
-          <span>aa</span>
-        </li>
-        <li class="rightmsg">
-          <span>bb</span>
-        </li> -->
       </ul>
     </div>
     <div class="footer">
@@ -38,12 +31,11 @@ export default {
   data() {
     return {
       msg: "你好",
-      replyMsg:''
+      replyMsg: ""
     };
   },
   methods: {
     sendChat() {
-       
       const socket = io("http://ttapi.research.itcast.cn", {
         token: this.$store.state.user.token
       });
@@ -51,16 +43,16 @@ export default {
         console.log("连接成功");
       });
       socket.emit("message", {
-        msg:this.msg  ,
+        msg: this.msg,
         timestamp: Date.now()
       });
       socket.on("message", function(data) {
-          $(".leftmsg span").text(data.msg);
+        $(".leftmsg span").text(data.msg);
         console.log(data);
       });
     }
   },
-  created() { 
+  created() {
     //   this.msg = ''
     // const socket = io("http://ttapi.research.itcast.cn", {
     //   token: this.$store.state.user.token

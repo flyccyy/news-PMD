@@ -56,7 +56,6 @@ export default {
             }
           });
         });
-        //需要加上这句才能预览
         reader.readAsDataURL(myfile);
       };
     }

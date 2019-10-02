@@ -2,8 +2,9 @@
   <div class="my_wrap">
     <van-nav-bar title="我的">
       <template slot="left">
-          <div class="left">
-        <van-icon name="arrow-left" /></div>
+        <div class="left">
+          <van-icon name="arrow-left" />
+        </div>
       </template>
     </van-nav-bar>
     <van-cell>
@@ -32,19 +33,13 @@
     </van-cell>
     <van-grid :column-num="3" clickable>
       <van-grid-item text="动态">
-        <template slot="icon">
-          {{myProfile.art_count}}
-        </template>
+        <template slot="icon">{{myProfile.art_count}}</template>
       </van-grid-item>
       <van-grid-item text="关注">
-        <template slot="icon">
-          {{myProfile.follow_count}}
-        </template>
+        <template slot="icon">{{myProfile.follow_count}}</template>
       </van-grid-item>
       <van-grid-item text="粉丝">
-        <template slot="icon">
-          {{myProfile.fans_count}}
-        </template>
+        <template slot="icon">{{myProfile.fans_count}}</template>
       </van-grid-item>
     </van-grid>
     <van-grid :column-num="3" clickable>
@@ -53,31 +48,30 @@
       <van-grid-item icon="records" text="作品" />
     </van-grid>
     <van-cell-group>
-      <van-cell title="用户反馈" is-link/>
+      <van-cell title="用户反馈" is-link />
       <van-cell title="小智同学" is-link to="/chat" />
-      <van-cell title="系统设置" is-link/>
+      <van-cell title="系统设置" is-link />
     </van-cell-group>
   </div>
 </template>
 
 <script>
-import {getUserOwnProfile} from '@/api/user.js'
+import { getUserOwnProfile } from "@/api/user.js";
 export default {
   data() {
     return {
-      myProfile:{}
+      myProfile: {}
+    };
+  },
+  methods: {
+    toPerson() {
+      this.$router.push("/person");
     }
   },
-    methods: {
-        toPerson(){
-            this.$router.push('/person')
-        }
-    },
-    async mounted(){
-      let res = await getUserOwnProfile()
-      console.log(res)
-      this.myProfile = res.data.data
-    }
+  async mounted() {
+    let res = await getUserOwnProfile();
+    this.myProfile = res.data.data;
+  }
 };
 </script>
 
@@ -92,11 +86,10 @@ export default {
     color: #fff;
   }
 }
-.left{
-
-    .van-icon {
-      color: #fff;
-    }
+.left {
+  .van-icon {
+    color: #fff;
+  }
 }
 .my_wrap {
   margin-top: 46px;

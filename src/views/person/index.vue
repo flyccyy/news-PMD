@@ -20,10 +20,10 @@
           </template>
         </van-cell>
         <van-cell title="昵称" :value="userObj.name" is-link @click="setNickname" />
-        <van-cell title="介绍" is-link >
+        <van-cell title="介绍" is-link>
           <!-- <template slot="label">
             {{userObj.intro}}
-          </template> -->
+          </template>-->
         </van-cell>
         <van-cell title="性别" :value="userObj.gender===0?'男':'女'" is-link />
         <van-cell title="生日" :value="userObj.birthday" is-link />
@@ -50,7 +50,6 @@
 <script>
 import { getUserProfile, setUserProfile } from "@/api/user.js";
 import upfile from "@/views/person/components/upfile.vue";
-//点击保存按钮没做
 export default {
   components: {
     upfile
@@ -59,19 +58,20 @@ export default {
     return {
       userObj: {},
       nicknameShow: false,
-      // nickname: "",
       isShowUpfile: false
     };
   },
   methods: {
+    //获取用户的个人信息
     async getUserProfile() {
       let res = await getUserProfile();
-      console.log(res);
       this.userObj = res.data.data;
     },
+    //显示修改昵称的弹出层
     setNickname() {
       this.nicknameShow = true;
     },
+    //显示修改头像的弹出框
     showUpfile() {
       this.isShowUpfile = true;
     },
@@ -79,12 +79,12 @@ export default {
       this.userObj.photo = obj.photo;
     },
     async saveProfile() {
+      //编辑用户个人信息
       await setUserProfile({
-        name:this.userObj.name,
-        gender:this.userObj.gender,
-        birthday:this.userObj.birthday
-      })
-     
+        name: this.userObj.name,
+        gender: this.userObj.gender,
+        birthday: this.userObj.birthday
+      });
     }
   },
   mounted() {

@@ -19,35 +19,32 @@
 <script>
 import { addComment } from "@/api/comment.js";
 export default {
-  props: ["art_id",'isCollect','commentId'],
+  props: ["art_id", "isCollect", "commentId"],
   data() {
     return {
       commentMsg: "",
-      writeObj:{},
+      writeObj: {}
     };
   },
   methods: {
     //点击发送按钮：如果isCollect是true，代表添加的是文章的评论，是false代表添加的是评论的回复
     async sendComment() {
-      if(this.isCollect){
+      if (this.isCollect) {
         let res = await addComment({
           id: this.art_id,
           content: this.commentMsg
         });
-        console.log(res);
         this.writeObj = res.data.data;
-        this.$emit('writeMsg',res.data.data)
-        this.commentMsg = '';
-      }else{
+        this.$emit("writeMsg", res.data.data);
+        this.commentMsg = "";
+      } else {
         let res = await addComment({
-          id:this.commentId,
-          content:this.commentMsg,
-          art_id:this.art_id
-        })
-        this.commentMsg = '';
-        this.$emit('writeMsg',res.data.data)
-        console.log(res)
-
+          id: this.commentId,
+          content: this.commentMsg,
+          art_id: this.art_id
+        });
+        this.commentMsg = "";
+        this.$emit("writeMsg", res.data.data);
       }
     }
   }
