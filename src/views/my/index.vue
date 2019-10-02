@@ -10,9 +10,9 @@
       <template slot="title">
         <div class="outer_wrap">
           <div class="img" @click="toPerson">
-            <van-image width="70" height="70" src="https://img.yzcdn.cn/vant/cat.jpeg" />
+            <van-image width="70" height="70" :src="myProfile.photo" />
           </div>
-          <van-cell title="黑马小公举1号">
+          <van-cell :title="myProfile.name">
             <template slot="label">
               <div class="btn">
                 <van-button type="primary" size="mini">申请认证</van-button>
@@ -33,17 +33,17 @@
     <van-grid :column-num="3" clickable>
       <van-grid-item text="动态">
         <template slot="icon">
-          33
+          {{myProfile.art_count}}
         </template>
       </van-grid-item>
       <van-grid-item text="关注">
         <template slot="icon">
-          33
+          {{myProfile.follow_count}}
         </template>
       </van-grid-item>
       <van-grid-item text="粉丝">
         <template slot="icon">
-          33
+          {{myProfile.fans_count}}
         </template>
       </van-grid-item>
     </van-grid>
@@ -61,12 +61,23 @@
 </template>
 
 <script>
+import {getUserOwnProfile} from '@/api/user.js'
 export default {
+  data() {
+    return {
+      myProfile:{}
+    }
+  },
     methods: {
         toPerson(){
             this.$router.push('/person')
         }
     },
+    async mounted(){
+      let res = await getUserOwnProfile()
+      console.log(res)
+      this.myProfile = res.data.data
+    }
 };
 </script>
 

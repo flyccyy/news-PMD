@@ -50,4 +50,25 @@ function setUserIcon(photo) {
   });
 }
 
-export { userLogin, followUser, cancelFollowUser, getUserProfile, setUserIcon };
+//编辑用户个人资料
+function setUserProfile({name,intro,gender,birthday}){
+  return request({
+    url:'v1_0/user/profile',
+    method:'PATCH',
+    data:{
+      name,
+      gender,
+      birthday
+    }
+  })
+}
+
+//获取用户自己信息
+function getUserOwnProfile(){
+  return request({
+    url:'v1_0/user',
+    method:'GET'
+  })
+}
+
+export { userLogin, followUser, cancelFollowUser, getUserProfile, setUserIcon,setUserProfile,getUserOwnProfile };
