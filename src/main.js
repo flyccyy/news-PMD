@@ -13,7 +13,12 @@ import VeeValidate, { Validator } from "vee-validate";
 import zh_CN from "vee-validate/dist/locale/zh_CN";
 //导入自己封装的登录方法的插件
 import loginplugin from '@/utils/loginplugin.js'
+
+// Vue.prototype.$ = $;
+
+
 Vue.use(Vant);
+// Vue.use(ImagePreview)
 //使用VeeValidate
 Vue.use(VeeValidate, {
   events: ""

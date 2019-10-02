@@ -19,6 +19,11 @@ export default new Router({
           name: "home",
           path: "home",
           component: () => import("@/views/home")
+        },
+        {
+          name:'my',
+          path:'my',
+          component:()=>import('@/views/my')
         }
       ]
     },
@@ -41,6 +46,15 @@ export default new Router({
       name:'detail',
       path:'/detail/:art_id',
       component:()=>import('@/views/detail')
+    },
+    {
+      name:'person',
+      path:'/person',
+      component:()=>import('@/views/person')
+    },
+    {
+      path:'/chat',
+      component:()=>import('@/views/chat')
     }
   ]
 });
