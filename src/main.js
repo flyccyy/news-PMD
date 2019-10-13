@@ -13,6 +13,7 @@ import VeeValidate, { Validator } from "vee-validate";
 import zh_CN from "vee-validate/dist/locale/zh_CN";
 //导入自己封装的登录方法的插件
 import loginplugin from "@/utils/loginplugin.js";
+// import cors from 'cors'
 
 Vue.use(Vant);
 //使用VeeValidate
@@ -23,6 +24,7 @@ Vue.use(VeeValidate, {
 Vue.use(Lazyload);
 
 Vue.use(loginplugin);
+// Vue.use(cors())
 //导入语言包
 Validator.localize("zh_CN", zh_CN);
 //dayjs

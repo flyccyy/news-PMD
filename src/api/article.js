@@ -1,5 +1,6 @@
 //封装文章内容相关的请求
 import request from "@/utils/axiosreq.js";
+//获取文章
 function getArticles({ channel_id, timestamp, with_top }) {
   return request({
     url: "v1_1/articles",

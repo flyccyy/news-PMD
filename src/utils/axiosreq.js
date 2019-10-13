@@ -2,7 +2,8 @@
 import axios from "axios";
 import store from '@/store'
 const myrequest = axios.create({
-  baseURL: "http://ttapi.research.itcast.cn/app/"
+  baseURL: "http://ttapi.research.itcast.cn/app/",
+ 
 });
 
 //定义发送refresh_token请求

@@ -49,7 +49,7 @@
     </van-grid>
     <van-cell-group>
       <van-cell title="用户反馈" is-link />
-      <van-cell title="小智同学" is-link to="/chat" />
+      <van-cell title="小智同学" is-link to="/chat" @click="senddata"/>
       <van-cell title="系统设置" is-link />
     </van-cell-group>
   </div>
@@ -57,6 +57,7 @@
 
 <script>
 import { getUserOwnProfile } from "@/api/user.js";
+import bus from '@/utils/bus.js'
 export default {
   data() {
     return {
@@ -66,10 +67,16 @@ export default {
   methods: {
     toPerson() {
       this.$router.push("/person");
+    },
+    senddata(){
+      console.log(this.myProfile)
+      bus.$emit('send',this.myProfile)
     }
   },
   async mounted() {
     let res = await getUserOwnProfile();
+    
+    // console.log(res)
     this.myProfile = res.data.data;
   }
 };

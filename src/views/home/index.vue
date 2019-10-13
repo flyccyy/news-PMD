@@ -51,6 +51,7 @@ import { getChannels } from "@/api/channel.js";
 import { getArticles } from "@/api/article.js";
 import channel from "@/views/home/channel";
 import more from "@/views/home/more";
+import axios from 'axios'
 export default {
   name: "home",
   components: {
